@@ -1,0 +1,31 @@
+{
+  "name": "backend-course-2025-6",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/KhinotskaSophia/backend-course-2025-6#readme",
+  "bugs": {
+    "url": "https://github.com/KhinotskaSophia/backend-course-2025-6/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhinotskaSophia/backend-course-2025-6.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "express": "^5.1.0",
+    "formidable": "^3.5.4",
+    "superagent": "^10.2.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
