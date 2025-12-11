@@ -3,25 +3,42 @@ const path = require('path');
 const crypto = require('crypto');
 const http = require('http'); 
 const express = require('express');
-const { program } = require('commander');
 const formidable = require('formidable');
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
+require('dotenv').config(); 
+const mysql = require('mysql2/promise');
 
 const inventoryDB = {}; 
 
-program
-    .requiredOption('-h, --host <host>', 'server host')
-    .requiredOption('-p, --port <port>', 'server port', parseInt)
-    .requiredOption('-c, --cache <path>', 'cache directory path');
+const options = {
+    host: process.env.HOST || '0.0.0.0',
+    port: process.env.PORT || 8000,
+    cache: process.env.CACHE_DIR || './test'
+};
 
-program.parse(process.argv);
-const options = program.opts();
+const dbConfig = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,      
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306 
+};
+
+async function testDbConnection() {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        console.log('Successfully connected 💐💐💐! ');
+        await connection.end();
+    } catch (err) {
+        console.error('Failed to connect 🥀🥀🥀:', err.message);
+    }
+}
 
 const app = express();
 
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} `);
     next();
 });
 
@@ -435,6 +452,7 @@ app.use((_, res) => res.sendStatus(405));
 
 async function startServer() {
     await setupCache();
+    await testDbConnection();
     
     app.listen(options.port, options.host, () => {
         console.log(`
